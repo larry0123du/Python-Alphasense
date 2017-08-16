@@ -7,6 +7,7 @@ import time
 import datetime
 import pytz
 import threading
+import argparse
 
 # define gain as default
 # define timeframe as 30 seconds (reference to https://github.com/waagsociety/making-sensor
@@ -17,9 +18,6 @@ TIMEFRAME = 60
 
 TZ = pytz.timezone("America/New_York")
 
-# WE0_TOTAL = 230 # 236
-# AUX0_TOTAL = 234 # 244
-# WE_SENS_TOTAL = 0.326 # -287
 sensors = {'o3':{'sn':'204290854', \
         'addr':0x48, \
         'we_e':231, \
@@ -56,17 +54,22 @@ sensors = {'o3':{'sn':'204290854', \
 ADS_TO_V = 4.096 / float(32767)
 
 
-def get_data(name, info_dict):
-    s = Sensor(name, info_dict['addr'], info_dict['we_e'], \
+def get_data(name, dirname, info_dict):
+    s = Sensor(name, dirname, info_dict['addr'], info_dict['we_e'], \
             info_dict['we_t'], info_dict['aux_e'], info_dict['aux_t'], \
             info_dict['sens_e'], info_dict['sens_t'])
     s.read_data()
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('destdir', help='The destination directory to which the data should be stored')
+    args = parser.parse_args()
+    dirname = args.destdir
+
     thread_list = []
     for key in sensors.keys():
-        t = threading.Thread(target=get_data, args=(key, sensors[key]))
+        t = threading.Thread(target=get_data, args=(key, dirname, sensors[key]))
         thread_list.append(t)
 
     for thread in thread_list:
@@ -81,7 +84,7 @@ def main():
 # adc = ads.ADS1115()
 
 class Sensor:
-    def __init__(self, stype, addr, we_e, we_t, \
+    def __init__(self, stype, dirname, addr, we_e, we_t, \
             aux_e, aux_t, sens_e, sens_t):
         self.stype = stype
         self.adc = ads.ADS1115(address=addr)
@@ -97,7 +100,7 @@ class Sensor:
         # counter for 30 samples
         counter = 0
 
-        f = open("/mnt/data/"+self.stype+"_conc.csv", "a+")
+        f = open(dirname+self.stype+"_conc.csv", "a+")
         # variables: t
         if f.readlines() == []:
             f.write("timestamp,{}\n".format(self.stype))
