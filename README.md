@@ -5,8 +5,8 @@ Setup for OPC:
 * Go to opc-n2 directory
 * Connect OPC to Raspberry Pi with a SPI-USB cable
 * ~~~
-pip install py-opc
-~~~
+  pip install py-opc
+  ~~~
 * Manually install py-usbiss
 * Run the program: 
 ~~~
