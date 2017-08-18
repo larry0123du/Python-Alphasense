@@ -1,4 +1,4 @@
-# Python-Alphasense
+# RasPyAlpha
 Python scripts that retrieve data from Alphasense gas and OPC sensors
 
 Setup for OPC:
