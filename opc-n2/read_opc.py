@@ -45,7 +45,7 @@ for i in range(15):
 bins += ["pm1", "pm2.5", "pm10", "flow rate"]
 #df = pd.DataFrame(columns=bins)
 
-path = "/mnt/data/opcn2.csv"
+path = "/mnt/data/" + filename
 # path = "opcn2.csv"
 if os.path.exists(path):
     f = open(path, "a+")
