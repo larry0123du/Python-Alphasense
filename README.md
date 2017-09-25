@@ -8,6 +8,11 @@ Setup for OPC:
   pip3 install py-opc
   ~~~
 * Manually install py-usbiss
+  * ~~~
+    git clone https://github.com/DancingQuanta/pyusbiss.git
+    cd pyusbiss
+    python setup.py install
+    ~~~
 * Run the program: 
 ~~~
 python read_opc.py DESTFILE
