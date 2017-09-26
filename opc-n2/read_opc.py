@@ -79,7 +79,7 @@ try:
 
         data_buffer = np.mean(np.array(data_buffer), axis=0)
 
-        row += list(data_buffer.astype('|S7'))
+        row += list(data_buffer.astype('str'))
         f.writelines(",".join(row)+"\n")
         f.flush()
         data_buffer = []
