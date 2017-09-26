@@ -1,4 +1,5 @@
 # Description: This script retrieves PM size distribution data from Alphasense OPC-N2 via SPI communication
+# Language: Python 3
 # Author: Ruihang Du
 # Email: du113@purdue.edu
 
@@ -24,7 +25,7 @@ filename = args.destfile
 spi = usbiss.USBISS("/dev/ttyACM0", "spi", spi_mode = 2, freq = 500000)
 e = 1
 
-while e != None:
+while e is not None:
     try:
         print "Try connecting to OPC-N2"
         e = None
@@ -45,7 +46,7 @@ for i in range(15):
 bins += ["pm1", "pm2.5", "pm10", "flow rate"]
 #df = pd.DataFrame(columns=bins)
 
-path = "/mnt/data/" + filename
+path = filename
 # path = "opcn2.csv"
 if os.path.exists(path):
     f = open(path, "a+")
@@ -85,5 +86,5 @@ try:
         #print "time span:", time.time() - start
         # time.sleep(10)
 except Exception as e:
-    print str(e)
+    print(str(e))
     f.close()
