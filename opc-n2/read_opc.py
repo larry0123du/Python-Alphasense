@@ -25,12 +25,12 @@ filename = args.destfile
 spi = usbiss.USBISS("/dev/ttyACM0", "spi", spi_mode = 2, freq = 500000)
 e = 1
 
-while e is not None:
+while e:
     try:
-        print "Try connecting to OPC-N2"
-        e = None
+        print("Try connecting to OPC-N2")
+        e = 0
         alpha = opc.OPCN2(spi)
-    except Exception as e:
+    except Exception:
         time.sleep(5)
 
 config = alpha.config()
